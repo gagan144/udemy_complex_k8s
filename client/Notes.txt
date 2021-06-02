@@ -1,0 +1,2 @@
+docker build -f Dockerfile.dev -t udemy_complex_client .
+docker run --name udemy_complex_client_dev -p 3000:3000 -d udemy_complex_client
