@@ -1,0 +1,8 @@
+Apply
+-------------
+    kubectl apply -f k8s
+
+
+Secrets
+--------------
+    kubectl create secret generic secret-pgpassword --from-literal PGPASSWORD=pgroot
