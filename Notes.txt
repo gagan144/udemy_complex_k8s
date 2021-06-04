@@ -6,3 +6,16 @@ Apply
 Secrets
 --------------
     kubectl create secret generic secret-pgpassword --from-literal PGPASSWORD=pgroot
+
+
+Ingress
+---------------
+    https://github.com/kubernetes/ingress-nginx
+    https://kubernetes.github.io/ingress-nginx/deploy/
+
+
+Access Server
+-------------------
+    Use secure http
+
+    https://<ip_address>
