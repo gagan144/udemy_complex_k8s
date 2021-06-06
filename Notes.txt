@@ -48,3 +48,6 @@ Google Cloud
         - RoleBinding/ClusterRoleBinding: Give ability to make changes
 
     - Create Secret
+
+    - IP Address of the application:
+        Goto 'Kubernetes Engine' > 'Services & Ingress' > Look for 'my-release-ingress-nginx-controller'
