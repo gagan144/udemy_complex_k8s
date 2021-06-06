@@ -1,3 +1,8 @@
+echo "-------------------------------------"
+echo "|           GCP Deployment          |"
+echo "-------------------------------------"
+echo ""
+
 # Build docker images
 docker build -t gagan144/udemy_complex_client:latest -t gagan144/udemy_complex_client:$GIT_COMMIT_SHA -f ./client/Dockerfile ./client
 docker build -t gagan144/udemy_complex_server:latest -t gagan144/udemy_complex_server:$GIT_COMMIT_SHA -f ./server/Dockerfile ./server
@@ -25,5 +30,4 @@ kubectl set image deployments/server-deployment server=gagan144/udemy_complex_se
 kubectl set image deployments/worker-deployment worker=gagan144/udemy_complex_worker:$GIT_COMMIT_SHA
 
 
-
-
+echo "---------- GCP Deployment Completed ----------"

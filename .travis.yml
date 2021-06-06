@@ -54,8 +54,3 @@ deploy:
   script: bash ./deploy_gcp_k8s.sh
   on:
     branch: master
-
-
-
-
-
