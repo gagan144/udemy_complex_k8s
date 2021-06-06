@@ -1,0 +1,9 @@
+- Open Terminal on gcloud console in the web broswer
+- gcloud config set project udemy-complex-k8s
+- gcloud config set compute/zone us-central1-c
+- gcloud container clusters get-credentials complex-k8s-cluster
+- Set secret
+    kubectl create secret generic secret-pgpassword --from-literal PGPASSWORD=pgroot123
+
+- Check
+    Goto Kubernetes Engine > Configuration

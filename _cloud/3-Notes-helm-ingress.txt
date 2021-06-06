@@ -1,0 +1,26 @@
+Official Link:
+    https://github.com/helm/helm
+    https://helm.sh/docs/intro/install/#from-script
+
+Inside Cloud Console:
+    - curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+    - chmod 700 get_helm.sh
+    - ./get_helm.sh
+
+Install Ingress-Nginx:
+    - helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+    - helm install my-release ingress-nginx/ingress-nginx
+
+    IMPORTANT: If you get an error such as chart requires kubeVersion: >=1.16.0-0.....
+    You may need to manually upgrade your cluster to at least the version specified:
+        gcloud container clusters upgrade  YOUR_CLUSTER_NAME --master --cluster-version 1.16
+
+    - Check:
+        - Goto Kubernetes Engine > Services & Ingress,
+          Look for 'my-release-ingress-nginx-controller', The IP addresses (:80, :443) are ip
+          address of the application.
+
+        - Goto 'Network Services' > Load Balancing:
+            You will find the google cloud load balancer for the application
+
+            GCP Load Balancer -> K8s Load Balancer Service -> nginx-controller/nginx pod -> ...

@@ -1,0 +1,61 @@
+language: generic
+sudo: required
+
+
+services:
+  - docker
+
+env:
+  global:
+    - GIT_COMMIT_SHA=$(git rev-parse HEAD)
+    - CLOUDSDK_CORE_DISABLE_PROMPTS=1
+
+
+before_install:
+  # Decrypt service-account.json.enc
+  - openssl aes-256-cbc -K $encrypted_9f3b5599b056_key -iv $encrypted_9f3b5599b056_iv -in service-account.json.enc -out service-account.json -d
+
+  # Download and install google cloud sdk
+  - curl https://sdk.cloud.google.com | bash > /dev/null;
+
+  # Look at default google cloud sdk path and apply configurations
+  - source $HOME/google-cloud-sdk/path.bash.inc
+
+  # Install kubectl command
+  - gcloud components update kubectl
+
+  # Google cloud authorization
+  - gcloud auth activate-service-account --key-file service-account.json
+
+  # Set project; use ProjectID and not project name
+  - gcloud config set project udemy-complex-k8s
+
+  # Set compute zone as per kubernetes cluster
+  - gcloud config set compute/zone us-central1-c
+
+  # Set kubernetes cluster to work on
+  - gcloud container clusters get-credentials complex-k8s-cluster
+
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+  # Build 'client' test image
+  - docker build -t gagan144/udemy_complex_client_test -f ./client/Dockerfile.dev ./client
+
+
+
+script:
+  # Run tests for 'client'
+  - docker run -e CI=true gagan144/udemy_complex_client_test npm run test
+
+
+deploy:
+  provider: script
+  script: bash ./deploy_gcp_k8s.sh
+  on:
+    branch: master
+
+
+
+
+

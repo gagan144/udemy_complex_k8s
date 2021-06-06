@@ -1,0 +1,27 @@
+We use ruby docker image to install travis cli and upload GCP service account json file.
+GCP service account: 'udemy-complex-k8s-f4b4a8e55a9c.json'
+
+
+Inside project directory Run the following commands one by one:
+
+    - docker run -it --name travis_cli -v <project_path>:/app ruby:2.4 sh
+    - cd /app
+    - gem install travis
+    - travis login --github-token <YOUR_PERSONAL_TOKEN> --com
+    - cd _cloud
+    - cp udemy-complex-k8s-f4b4a8e55a9c.json service-account.json
+    - travis encrypt-file service-account.json -r <USERNAME/REPO> --com
+    - travis encrypt service-account.json
+    - mv service-account.json.enc ../service-account.json.enc
+
+# Commit 'service-account.json.enc' file in your repository
+
+
+# ------ Get github token -----------
+The Travis login now requires a Github Token. Please follow these instructions to create a Personal Token for Travis to use here:
+
+https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token
+
+This will also require setting the scope. Travis requires the permissions noted here:
+
+https://docs.travis-ci.com/user/github-oauth-scopes/#repositories-on-httpstravis-cicom-private-and-public

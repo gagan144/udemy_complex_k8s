@@ -1,1 +1,7 @@
+.idea/
+
 *.ppk
+_cloud/
+!_cloud/1-Notes-travis-cli.txt
+!_cloud/2-Notes-gcloud-console.txt
+!_cloud/3-Notes-helm-ingress.txt

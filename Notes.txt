@@ -1,11 +1,12 @@
+Secrets
+--------------
+    kubectl create secret generic secret-pgpassword --from-literal PGPASSWORD=pgroot
+
+
 Apply
 -------------
     kubectl apply -f k8s
 
-
-Secrets
---------------
-    kubectl create secret generic secret-pgpassword --from-literal PGPASSWORD=pgroot
 
 
 Ingress
@@ -13,9 +14,37 @@ Ingress
     https://github.com/kubernetes/ingress-nginx
     https://kubernetes.github.io/ingress-nginx/deploy/
 
+    Describe:
+        kubectl describe ingress ingress-service
+
 
 Access Server
 -------------------
     Use secure http
 
-    https://<ip_address>
+    https://<minikube_ip_address>
+
+
+Git SHA
+-------------
+Get git sha for latest commit
+
+    git rev-parse HEAD
+
+
+
+Travis
+-----------------
+    - We create and download 'service-account.json' from GCP to local machine
+    - Install Travis CLI
+    - Encrypt .json file
+    - Upload to travis account
+
+Google Cloud
+-----------------------
+    - Service Account
+        - Only Identifies a Pod inside the cluster
+        - Does have permissions to make changes
+        - RoleBinding/ClusterRoleBinding: Give ability to make changes
+
+    - Create Secret
