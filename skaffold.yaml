@@ -1,0 +1,67 @@
+apiVersion: skaffold/v2beta12
+kind: Config
+
+build:
+  local:
+    # Disable push to docker hub
+    push: false
+
+  artifacts:
+
+    - image: gagan144/udemy_complex_client
+      context: client
+      docker:
+        dockerfile: Dockerfile.dev
+      sync:
+        # Sync following type of files
+        # If you change anything else; it will rebuild entire container
+        manual:
+          - src: "src/**/*.js"
+            dest: .
+          - src: "src/**/*.css"
+            dest: .
+          - src: "src/**/*.html"
+            dest: .
+
+    - image: gagan144/udemy_complex_server
+      context: server
+      docker:
+        dockerfile: Dockerfile.dev
+      sync:
+        manual:
+          - src: "*.js"
+            dest: .
+
+    - image: gagan144/udemy_complex_worker
+      context: worker
+      docker:
+        dockerfile: Dockerfile.dev
+      sync:
+        manual:
+          - src: "*.js"
+            dest: .
+
+deploy:
+  # Deploy using kubernetes yaml files
+  kubectl:
+    manifests:
+      ### Do not add 'PVC' or postgress etc since they will get deleted
+      ### After you shutdown skaffold
+      - k8s/client-cluster-ip-service.yaml
+      - k8s/client-deployment.yaml
+      - k8s/server-cluster-ip-service.yaml
+      - k8s/server-deployment.yaml
+      - k8s/worker-deployment.yaml
+
+      ### Deploy them separately
+#      - k8s/database-persistent-volume-claim.yaml
+#      - k8s/ingress-service.yaml
+#      - k8s/postgres-cluster-ip-service.yaml
+#      - k8s/postgres-deployment.yaml
+#      - k8s/redis-cluster-ip-service.yaml
+#      - k8s/redis-deployment.yaml
+
+
+      ### You can also add all k8s yml file at once,
+      ### NOTE: this does not kill pods and other objects
+      # - ./k8s/*
